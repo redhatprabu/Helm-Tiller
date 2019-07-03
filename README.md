@@ -28,6 +28,8 @@ Run the version command again to ensure that Tiller is available:
 ```
 ```
 [user@host]$ helm version
+
+```
 check_circle
 Deploy the example nginx chart, correct any errors the occur to allow the correct installation of the chart and verify that the nginx container is running.
 keyboard_arrow_up
@@ -40,7 +42,7 @@ This command should return a directory listing containing Chart.yaml:
 ```
 [cloud_user@host]$ls ./nginx
 Install the nginx chart:
-```
+
 ```
 [cloud_user@host]$ helm install ./nginx
 This command should error with a "name" error, due to the tiller service account missing.
@@ -50,8 +52,13 @@ Add the tiller service account:
 ```
 
 [cloud_user@host]$ kubectl create serviceaccount --namespace kube-system tiller
+
+
 [cloud_user@host]$ kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+
+
 [cloud_user]$ kubectl patch deploy --namespace kube-system tiller-deploy -p'{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
+
 
 ```
 
