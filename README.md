@@ -4,8 +4,10 @@ Download the helm binary release:
 [user@host]$ curl https://storage.googleapis.com/kubernetes-helm/helm-v2.12.3-linux-amd64.tar.gz > ./helm.tar.gz
 Extract the archive:
 
+```
 [user@host]$ tar -xvf ./helm.tar.gz
 Navigate to the linux-amd64 directory:
+```
 
 [user@host]$ cd linux-amd64
 Move the helm and tiller executable files to the /usr/local/bin directory:
