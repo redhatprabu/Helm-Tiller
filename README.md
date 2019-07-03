@@ -9,48 +9,58 @@ Extract the archive:
 [user@host]$ tar -xvf ./helm.tar.gz
 Navigate to the linux-amd64 directory:
 ```
-
+```
 [user@host]$ cd linux-amd64
 Move the helm and tiller executable files to the /usr/local/bin directory:
 
 [user@host]$ sudo mv ./helm /usr/local/bin
 [user@host]$ sudo mv ./tiller /usr/local/bin
+
+```
 Run the helm version command to ensure that the helm command is available:
 
 ```
 [user@host]$ helm version
 ```
+
 Install tiller:
 
 ```
 [user@host]$ helm init
 Run the version command again to ensure that Tiller is available:
 ```
-```
+
 [user@host]$ helm version
 
-```
+
 check_circle
 Deploy the example nginx chart, correct any errors the occur to allow the correct installation of the chart and verify that the nginx container is running.
 keyboard_arrow_up
 Ensure that you are in the cloud_user home directory. This directory contains the nginx chart at /home/cloud_user/nginx.
-```
+
+
+
+
+
 [cloud_user@host]$ cd ~
 This command should return a directory listing containing Chart.yaml:
-```
+
 
 ```
 [cloud_user@host]$ls ./nginx
+
+```
 Install the nginx chart:
 
 ```
 [cloud_user@host]$ helm install ./nginx
 This command should error with a "name" error, due to the tiller service account missing.
-
 ```
+
+ 
 Add the tiller service account:
-```
 
+```
 [cloud_user@host]$ kubectl create serviceaccount --namespace kube-system tiller
 
 
@@ -58,13 +68,13 @@ Add the tiller service account:
 
 
 [cloud_user]$ kubectl patch deploy --namespace kube-system tiller-deploy -p'{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
-
-
 ```
+
+ 
 
 Wait for the tiller pod to restart with the update, and then install the `nginx` example chart:
 
-```
+ ```
 [cloud_user@host]$ helm install ./nginx
 
 ```
@@ -72,9 +82,11 @@ Once the release has completed and you see the release output, locate the cluste
 
 ```
 [cloud_user@host]$ curl "service cluster ip":8888
-This should return an html message.
 
 ```
+This should return an html message.
+
+
 
 Clean up the test deployment, get the release name from Helm, and then delete the release:
 
